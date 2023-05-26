@@ -1,7 +1,7 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-import { basicLightbox } from "basiclightbox";
+// import { basicLightbox } from "basiclightbox";
 
 console.log(galleryItems);
 
