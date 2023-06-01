@@ -16,6 +16,7 @@ const makeGalleryItem = ({ preview, original, description }) =>
     />
   </a>
 </li>`;
+
 const markup = galleryItems.map((element) => makeGalleryItem(element)).join("");
 
 gallery.insertAdjacentHTML("afterbegin", markup);
@@ -29,10 +30,22 @@ gallery.addEventListener("click", (event) => {
   console.log(event.target);
   const largeImageUrl = event.target.dataset.source;
 
-  basicLightbox
-    .create(
-      `
-    <img src="${largeImageUrl}" width="800" height="600">`
-    )
-    .show();
+  const instance = basicLightbox.create(
+    `<img src="${largeImageUrl}" width="800" height="600">`,
+    {
+      onClose: () => {
+        document.removeEventListener("keydown", handleKeyPress);
+      },
+    }
+  );
+
+  instance.show();
+
+  document.addEventListener("keydown", handleKeyPress);
+
+  function handleKeyPress(event) {
+    if (event.code === "Escape") {
+      instance.close();
+    }
+  }
 });
